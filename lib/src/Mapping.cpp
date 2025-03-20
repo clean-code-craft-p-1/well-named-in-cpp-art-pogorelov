@@ -39,23 +39,10 @@ std::string name(const ColorPair& pair)
 
 std::string printManual()
 {
-    return std::accumulate(kColorPairs.begin(),
-                           kColorPairs.end(),
-                           std::string{},
-                           [](std::string manual, const ColorPair& pair) {
-                               return std::move(manual)
-                                      + std::format("{:2} : [{}]\n", number(pair), name(pair));
-                           });
+    return std::accumulate(
+        kColorPairs.begin(), kColorPairs.end(), std::string{}, [](auto&& manual, const auto& pair) {
+            return std::format("{}{:2} : [{}]\n", manual, number(pair), name(pair));
+        });
 }
-
-// std::string printManual()
-// {
-//     std::string manual;
-//     for (const auto& pair : kColorPairs)
-//     {
-//         manual += std::format("{:2} : [{}]\n", number(pair), name(pair));
-//     }
-//     return manual;
-// }
 
 } // namespace ColorCodes
