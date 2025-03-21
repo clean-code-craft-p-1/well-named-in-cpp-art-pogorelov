@@ -18,7 +18,7 @@ jobs:
           cmake --build build
 
       - name: run tests
-        run: build/lib/test/ColorCodes.Test.Unit
+        run: ctest --test-dir build --extra-verbose
 
       - name: run example
         run: build/example/ColorCodes.Example
