@@ -1,6 +1,6 @@
 name: Build and Run
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   build:
@@ -8,9 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: build
-      run: g++ -Wall -Wextra -o testchecker *.cpp
-      
-    - name: run
-      run: ./testchecker
+      - uses: actions/checkout@v4
+      - name: setup cmake
+        run: sudo apt install cmake
+
+      - name: build
+        run: |
+          cmake -S . -B build
+          cmake --build build
+
+      - name: run tests
+        run: ctest --test-dir build --extra-verbose
+
+      - name: run example
+        run: build/example/ColorCodes.Example
+
